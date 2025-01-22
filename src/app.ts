@@ -1,7 +1,8 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
-import prisma from './config/db';  // Import prisma to test connection
+import prisma from './config/db'; 
+import challengeRoutes from './routes/challengeroute';
 
 dotenv.config();
 
@@ -10,6 +11,10 @@ const PORT = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(express.json());
+
+// Use routes
+app.use('/api/challenges', challengeRoutes);
+
 
 
 app.listen(PORT, () => {
