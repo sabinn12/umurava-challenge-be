@@ -47,3 +47,48 @@ export const challengeValidationSchema = Joi.object({
     'string.max': 'Tasks must not exceed 500 characters',
   }),
 });
+
+// Update Challenge Validation Schema
+export const updateChallengeValidationSchema = Joi.object({
+    title: Joi.string().min(3).max(100).optional().messages({
+      'string.base': 'Title must be a string',
+      'string.min': 'Title must be at least 3 characters long',
+      'string.max': 'Title must not exceed 100 characters',
+    }),
+  
+    deadline: Joi.date().optional().messages({
+      'date.base': 'Deadline must be a valid date',
+      'date.format': 'Deadline must be a valid date',
+    }),
+  
+    duration: Joi.string().min(3).max(20).optional().messages({
+      'string.base': 'Duration must be a string',
+      
+    }),
+  
+    moneyPrize: Joi.string().min(2).max(50).optional().messages({
+      'string.base': 'Money prize must be a string',
+    }),
+  
+    contactEmail: Joi.string().email().optional().messages({
+      'string.email': 'Contact email must be a valid email',
+    }),
+  
+    description: Joi.string().min(10).max(250).optional().messages({
+      'string.base': 'Description must be a string',
+      'string.min': 'Description must be at least 10 characters long',
+      'string.max': 'Description must not exceed 250 characters',
+    }),
+  
+    brief: Joi.string().min(10).max(50).optional().messages({
+      'string.base': 'Brief must be a string',
+      'string.min': 'Brief must be at least 10 characters long',
+      'string.max': 'Brief must not exceed 50 characters',
+    }),
+  
+    tasks: Joi.string().max(500).optional().messages({
+      'string.base': 'Tasks must be a string',
+      'string.max': 'Tasks must not exceed 500 characters',
+    }),
+  });
+  
