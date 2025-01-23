@@ -14,9 +14,9 @@ router.get('/', getAllChallenges);
 router.get('/:id', getChallengeById);
 
 // Update challenge route
-router.put('/:id', validateUpdateChallenge, updateChallenge);
+router.put('/update/:id', validateUpdateChallenge, updateChallenge);
 
 // Delete challenge route
-router.delete('/:id', deleteChallenge);
+router.delete('/delete/:id', deleteChallenge);
 
 export default router;
