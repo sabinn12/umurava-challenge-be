@@ -17,12 +17,12 @@ model Challenge {
   id          String   @id @default(auto()) @map("_id") @db.ObjectId
   title       String   @unique
   deadline    DateTime
-  duration    String   // Changed to string
-  moneyPrize  String   // Changed to string
+  duration    String   
+  moneyPrize  String   
   contactEmail String  @unique
   description String   @db.String
   brief       String   @db.String
-  tasks       String   @db.String // Changed from array to single text field
+  tasks       String   @db.String 
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }
