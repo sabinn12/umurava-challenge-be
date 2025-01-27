@@ -16,6 +16,8 @@ beforeAll(async () => {
         description: 'First challenge description',
         brief: 'Brief for first challenge',
         tasks: 'Task 1',
+        seniority: 'Junior', 
+        skillsNeeded: ['HTML', 'CSS'], 
       },
       {
         id: new ObjectId().toString(),
@@ -27,6 +29,9 @@ beforeAll(async () => {
         description: 'Second challenge description',
         brief: 'Brief for second challenge',
         tasks: 'Task 2',
+        seniority: 'Mid',
+        skillsNeeded: ['HTML', 'CSS'], 
+        
       },
     ],
   });
@@ -65,6 +70,9 @@ describe('Challenge API Endpoints', () => {
         description: 'Third challenge description',
         brief: 'Brief for third challenge',
         tasks: 'Task 3',
+        seniority: 'Senior', 
+        skillsNeeded: ['HTML', 'CSS'],
+
       };
 
       const response = await request(app)

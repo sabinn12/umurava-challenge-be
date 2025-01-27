@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import ChallengeService from '../services/challengeservice';
 
 // Middleware to check if a challenge exists
-export const checkChallengeExists = async (req: Request, res: Response, next: NextFunction) => {
+export const checkIfChallengeExists = async (req: Request, res: Response, next: NextFunction) => {
   const { id } = req.params;
 
   try {
@@ -12,7 +12,7 @@ export const checkChallengeExists = async (req: Request, res: Response, next: Ne
       return;
     }
 
-    // Attach the challenge to the request object for use in the controller
+    
     (req as any).challenge = challenge;
     next();
   } catch (error: any) {

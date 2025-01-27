@@ -17,10 +17,30 @@ export const createChallenge = async (req: Request, res: Response) => {
 // Get all challenges controller
 export const getAllChallenges = async (req: Request, res: Response) => {
   try {
-    
-    const challenges = await ChallengeService.getAllChallenges();
+    // Destructure query parameters with defaults
+    const { page = '1', limit = '10' } = req.query;
+    const parsedPage = parseInt(page as string);
+    const parsedLimit = parseInt(limit as string);
 
-    res.status(200).json({ message: 'Challenges retrieved successfully', challenges });
+    // Calculate offset for pagination
+    const offset = (parsedPage - 1) * parsedLimit;
+
+    // Fetch paginated challenges and total count
+    const { challenges, total } = await ChallengeService.getAllChallenges(offset, parsedLimit);
+
+    // Calculate total pages
+    const totalPages = Math.ceil(total / parsedLimit);
+
+    res.status(200).json({
+      message: 'Challenges retrieved successfully',
+      challenges,
+      pagination: {
+        page: parsedPage,
+        limit: parsedLimit,
+        total,
+        totalPages,
+      },
+    });
   } catch (error: any) {
     res.status(500).json({ message: 'Error retrieving challenges', error: error.message });
   }

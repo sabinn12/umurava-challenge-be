@@ -46,9 +46,20 @@ export const challengeValidationSchema = Joi.object({
     'string.base': 'Tasks must be a string',
     'string.max': 'Tasks must not exceed 500 characters',
   }),
+  seniority: Joi.string().valid('Junior', 'Mid', 'Senior').required().messages({
+    'string.empty': 'Seniority is required',
+    'string.base': 'Seniority must be a string',
+    'any.only': 'Seniority must be one of: Junior, Mid, Senior',
+  }),
+
+  skillsNeeded: Joi.array().items(Joi.string()).min(1).required().messages({
+    'array.base': 'Skills needed must be an array',
+    'array.min': 'At least one skill is required',
+    'any.required': 'Skills needed is required',
+  }),
 });
 
-// Update Challenge Validation Schema
+
 export const updateChallengeValidationSchema = Joi.object({
     title: Joi.string().min(3).max(100).optional().messages({
       'string.base': 'Title must be a string',
@@ -90,5 +101,16 @@ export const updateChallengeValidationSchema = Joi.object({
       'string.base': 'Tasks must be a string',
       'string.max': 'Tasks must not exceed 500 characters',
     }),
+    seniority: Joi.string().valid('Junior', 'Mid', 'Senior').optional().messages({
+    'string.empty': 'Seniority is required',
+    'string.base': 'Seniority must be a string',
+    'any.only': 'Seniority must be one of: Junior, Mid, Senior',
+  }),
+
+  skillsNeeded: Joi.array().items(Joi.string()).min(1).optional().messages({
+    'array.base': 'Skills needed must be an array',
+    'array.min': 'At least one skill is required',
+    'any.required': 'Skills needed is required',
+  }),
   });
   

@@ -7,4 +7,6 @@ export type Challenge = {
     description: string;
     brief: string;
     tasks: string; 
+    seniority: string;
+    skillsNeeded: string[];
   };

@@ -2,26 +2,34 @@ import prisma from '../config/db';
 import { Challenge } from '../utils/types/challenges';
 
 class ChallengeService {
-  // Create a challenge
+  
   async createChallenge(data: Challenge) {
     return prisma.challenge.create({
       data,
     });
   }
 
-  // Get all challenges
-  async getAllChallenges() {
-    return prisma.challenge.findMany();
-  }
+  
+  async getAllChallenges(offset: number, limit: number) {
+    
+    const challenges = await prisma.challenge.findMany({
+      skip: offset,
+      take: limit,
+    });
 
-  // Get a challenge by ID
+    const total = await prisma.challenge.count();
+  
+    return { challenges, total };
+  }
+  
+  
   async getChallengeById(id: string) {
     return prisma.challenge.findUnique({
       where: { id },
     });
   }
 
-  // Update a challenge
+  
   async updateChallenge(id: string, data: Partial<Challenge>) {
     return prisma.challenge.update({
       where: { id },
@@ -29,7 +37,7 @@ class ChallengeService {
     });
   }
 
-  // Delete a challenge
+  
   async deleteChallenge(id: string) {
     return prisma.challenge.delete({
       where: { id },
@@ -37,5 +45,5 @@ class ChallengeService {
   }
 }
 
-// Export an instance of the service class
+
 export default new ChallengeService();

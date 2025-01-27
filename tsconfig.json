@@ -7,9 +7,9 @@
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "baseUrl": "./", // Base directory for resolving aliases
+    "baseUrl": "./", 
     "paths": {
-      "@/*": ["src/*"] // Define the alias @/ to point to the src/ directory
+      "@/*": ["src/*"] 
     }
   },
   "include": ["src/**/*"],

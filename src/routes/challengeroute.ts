@@ -1,7 +1,7 @@
 import express from 'express';
 import { createChallenge, getAllChallenges, getChallengeById, updateChallenge, deleteChallenge } from '../controllers/challengecontroller';
 import { validateChallenge, validateUpdateChallenge } from '../middleware/validatechallenge';
-import { checkChallengeExists } from '../middleware/challengeMiddlaware';
+import { checkIfChallengeExists} from '../middleware/challengeMiddlaware';
 
 const router = express.Router();
 
@@ -12,12 +12,12 @@ router.post('/create', validateChallenge, createChallenge);
 router.get('/', getAllChallenges);
 
 // get a challenge by id route
-router.get('/:id', getChallengeById);
+router.get('/:id',checkIfChallengeExists, getChallengeById);
 
 // Update challenge route
-router.put('/update/:id', checkChallengeExists, validateUpdateChallenge, updateChallenge);
+router.put('/update/:id', checkIfChallengeExists, validateUpdateChallenge, updateChallenge);
 
 // Delete challenge route
-router.delete('/delete/:id', checkChallengeExists, deleteChallenge);
+router.delete('/delete/:id', checkIfChallengeExists, deleteChallenge);
 
 export default router;

@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { challengeValidationSchema, updateChallengeValidationSchema } from '../schemas/challengeschema';
 
-// Challenge Validation Middleware
+
 export const validateChallenge = (req: Request, res: Response, next: NextFunction) => {
   const { error } = challengeValidationSchema.validate(req.body);
   
@@ -12,7 +12,7 @@ export const validateChallenge = (req: Request, res: Response, next: NextFunctio
   
   next();
 };
-// Update Challenge Validation Middleware
+
 export const validateUpdateChallenge = (req: Request, res: Response, next: NextFunction) => {
     const { error } = updateChallengeValidationSchema.validate(req.body, { abortEarly: false });
     if (error) {
