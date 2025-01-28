@@ -1,0 +1,30 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - ft/challenges
+  pull_request:
+    branches:
+      - ft/challenges
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '22.6.0'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run tests
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        run: npm test
