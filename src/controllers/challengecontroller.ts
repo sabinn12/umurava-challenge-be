@@ -18,7 +18,7 @@ export const createChallenge = async (req: Request, res: Response) => {
 export const getAllChallenges = async (req: Request, res: Response) => {
   try {
     // Destructure query parameters with defaults
-    const { page = '1', limit = '10' } = req.query;
+    const { page = '1', limit = '3' } = req.query;
     const parsedPage = parseInt(page as string);
     const parsedLimit = parseInt(limit as string);
 
@@ -51,7 +51,7 @@ export const getChallengeById = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
 
-    const challenge = await ChallengeService.getChallengeById(id);
+    const challenge = (req as any).challenge;
 
     if (!challenge) {
       res.status(404).json({ message: 'Challenge not found' });

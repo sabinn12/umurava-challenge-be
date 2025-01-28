@@ -16,7 +16,7 @@ beforeAll(async () => {
         description: 'First challenge description',
         brief: 'Brief for first challenge',
         tasks: 'Task 1',
-        seniority: 'Junior', 
+        seniority: ['Junior', 'Senior'],
         skillsNeeded: ['HTML', 'CSS'], 
       },
       {
@@ -29,7 +29,7 @@ beforeAll(async () => {
         description: 'Second challenge description',
         brief: 'Brief for second challenge',
         tasks: 'Task 2',
-        seniority: 'Mid',
+        seniority: ['Mid', 'Senior'],
         skillsNeeded: ['HTML', 'CSS'], 
         
       },
@@ -70,7 +70,7 @@ describe('Challenge API Endpoints', () => {
         description: 'Third challenge description',
         brief: 'Brief for third challenge',
         tasks: 'Task 3',
-        seniority: 'Senior', 
+        seniority: ['Mid', 'Senior'],
         skillsNeeded: ['HTML', 'CSS'],
 
       };
