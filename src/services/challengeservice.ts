@@ -15,11 +15,14 @@ class ChallengeService {
     const challenges = await prisma.challenge.findMany({
       skip: offset,
       take: limit,
+      orderBy: {
+        createdAt: 'desc',
+      },
     });
 
-    const total = await prisma.challenge.count();
+    const totalChallenges = await prisma.challenge.count();
   
-    return { challenges, total };
+    return { challenges, totalChallenges };
   }
   
   
