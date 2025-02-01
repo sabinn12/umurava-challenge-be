@@ -17,27 +17,22 @@ export const createChallenge = async (req: Request, res: Response) => {
 // Get all challenges controller
 export const getAllChallenges = async (req: Request, res: Response) => {
   try {
-    // Destructure query parameters with defaults
-    const { page = '1', limit = '3' } = req.query;
+    const { page = '1', limit = '3', status } = req.query;
     const parsedPage = parseInt(page as string);
     const parsedLimit = parseInt(limit as string);
-
-    // Calculate offset for pagination
     const offset = (parsedPage - 1) * parsedLimit;
 
-    // Fetch paginated challenges and total count
-    const { challenges, total } = await ChallengeService.getAllChallenges(offset, parsedLimit);
+    const { challenges, totalChallenges } = await ChallengeService.getAllChallenges(offset, parsedLimit,status as string);
 
-    // Calculate total pages
-    const totalPages = Math.ceil(total / parsedLimit);
+    const totalPages = Math.ceil(totalChallenges / parsedLimit);
 
     res.status(200).json({
       message: 'Challenges retrieved successfully',
       challenges,
+      totalChallenges, 
       pagination: {
         page: parsedPage,
         limit: parsedLimit,
-        total,
         totalPages,
       },
     });
@@ -45,6 +40,17 @@ export const getAllChallenges = async (req: Request, res: Response) => {
     res.status(500).json({ message: 'Error retrieving challenges', error: error.message });
   }
 };
+
+// Get challenge analytics
+export const getChallengeAnalytics = async (req: Request, res: Response) => {
+  try {
+    const analytics = await ChallengeService.getChallengeAnalytics();
+    res.status(200).json({ message: 'Challenge analytics retrieved successfully', analytics });
+  } catch (error: any) {
+    res.status(500).json({ message: 'Error retrieving challenge analytics', error: error.message });
+  }
+};
+
 
 // Get a challenge by ID controller
 export const getChallengeById = async (req: Request, res: Response) => {
@@ -73,6 +79,20 @@ export const updateChallenge = async (req: Request, res: Response) => {
     res.status(200).json({ message: 'Challenge updated successfully', updatedChallenge });
   } catch (error: any) {
     res.status(500).json({ message: 'Error updating challenge', error: error.message });
+  }
+};
+
+// Update challenge status controller
+export const updateChallengeStatus = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const { status } = req.body;
+    
+    // Update the challenge status
+    const updatedChallenge = await ChallengeService.updateChallenge(id, { status });
+    res.status(200).json({ message: 'Challenge status updated successfully', updatedChallenge });
+  } catch (error: any) {
+    res.status(500).json({ message: 'Error updating challenge status', error: error.message });
   }
 };
 

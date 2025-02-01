@@ -10,16 +10,37 @@ class ChallengeService {
   }
 
   
-  async getAllChallenges(offset: number, limit: number) {
-    
+  async getAllChallenges(offset: number, limit: number ,status?: string) {
+
+    const whereClause = status ? { status } : {};
+
     const challenges = await prisma.challenge.findMany({
       skip: offset,
       take: limit,
+      orderBy: {
+        createdAt: 'desc',
+      },
     });
 
-    const total = await prisma.challenge.count();
+    const totalChallenges = await prisma.challenge.count();
   
-    return { challenges, total };
+    return { challenges, totalChallenges };
+  }
+   // Get challenge analytics
+   async getChallengeAnalytics() {
+    const openedChallenges = await prisma.challenge.count({
+      where: { status: 'OPENED' },
+    });
+
+    const ongoingChallenges = await prisma.challenge.count({
+      where: { status: 'ONGOING' },
+    });
+
+    const completedChallenges = await prisma.challenge.count({
+      where: { status: 'COMPLETED' },
+    });
+
+    return { opened: openedChallenges,ongoing: ongoingChallenges,completed: completedChallenges,};
   }
   
   

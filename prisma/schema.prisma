@@ -24,7 +24,8 @@ model Challenge {
   brief       String   @db.String
   tasks       String   @db.String 
   seniority   String[]   
-  skillsNeeded String[] 
+  skillsNeeded String[]
+  status      String?  
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }

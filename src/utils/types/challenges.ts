@@ -9,4 +9,5 @@ export type Challenge = {
     tasks: string; 
     seniority: any[];
     skillsNeeded: string[];
+    status?: string;
   };

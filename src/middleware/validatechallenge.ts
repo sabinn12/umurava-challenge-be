@@ -1,12 +1,12 @@
 import { Request, Response, NextFunction } from 'express';
-import { challengeValidationSchema, updateChallengeValidationSchema } from '../schemas/challengeschema';
+import { challengeValidationSchema, updateChallengeValidationSchema, statusValidationSchema } from '../schemas/challengeschema';
 
 
 export const validateChallenge = (req: Request, res: Response, next: NextFunction) => {
   const { error } = challengeValidationSchema.validate(req.body);
   
   if (error) {
-     res.status(400).json({ message: 'Validation Error', details: error.details });
+     res.status(400).json({ message: 'Validation Error', details: error.details.map((err) => err.message) });
         return;
   }
   
@@ -23,4 +23,17 @@ export const validateUpdateChallenge = (req: Request, res: Response, next: NextF
       return;
     }
     next();
+  };
+
+  export const validateStatus = (req: Request, res: Response, next: NextFunction) => {
+    const { status } = req.body;
+  
+    // Validate the request body using Joi
+    const { error } = statusValidationSchema.validate({ status });
+    if (error) {
+       res.status(400).json({ message: 'Validation Error', details: error.details.map((err) => err.message) });
+      return;
+    }
+  
+    next(); 
   };
