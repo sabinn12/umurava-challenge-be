@@ -112,4 +112,13 @@ export const updateChallengeValidationSchema = Joi.object({
     'any.required': 'Skills needed is required',
   }),
   });
+
+  export const statusValidationSchema = Joi.object({
+    status: Joi.string().valid('OPENED', 'ONGOING', 'COMPLETED').required().messages({
+      'string.base': 'Status must be a string',
+      'any.only': 'Status must be one of: OPENED, ONGOING, COMPLETED',
+      'any.required': 'Status is required',
+    }),
+  });
+
   

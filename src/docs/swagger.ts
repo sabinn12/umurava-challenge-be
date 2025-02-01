@@ -62,6 +62,84 @@ const swaggerDocument = {
         },
       },
     },
+    "/api/challenges/{id}": {
+      get: {
+        summary: "Get a challenge by ID",
+        description: "Retrieve a specific challenge by its unique ID.",
+        tags: ["Challenges"],
+        parameters: [
+          {
+            name: "id",
+            in: "path",
+            required: true,
+            description: "The ID of the challenge to retrieve",
+            schema: {
+              type: "string",
+            },
+          },
+        ],
+        responses: {
+          200: {
+            description: "Challenge retrieved successfully",
+            content: {
+              "application/json": {
+                schema: {
+                  type: "object",
+                  properties: {
+                    id: { type: "string", description: "Challenge ID" },
+                    title: { type: "string", description: "Title of the challenge" },
+                    deadline: { type: "string", format: "date", description: "Deadline of the challenge" },
+                    duration: { type: "string", description: "Duration of the challenge" },
+                    moneyPrize: { type: "string", description: "Prize money" },
+                    contactEmail: { type: "string", format: "email", description: "Contact email" },
+                    description: { type: "string", description: "Detailed description" },
+                    brief: { type: "string", description: "Brief description" },
+                    tasks: { type: "string", description: "Tasks description" },
+                    seniority: { type: "array", items: { type: "string", enum: ["Junior", "Mid", "Senior"] }, description: "Seniority of the challenge" },
+                    skillsNeeded: { type: "array", items: { type: "string" }, description: "Skills needed for the challenge" },
+                    createdAt: { type: "string", format: "date-time", description: "Creation date of the challenge" },
+                    updatedAt: { type: "string", format: "date-time", description: "Last updated date of the challenge" },
+                  },
+                },
+              },
+            },
+          },
+          404: {
+            description: "Challenge not found",
+          },
+          500: {
+            description: "Internal server error",
+          },
+        },
+      },
+    },
+    "/api/challenges/analytics": {
+      get: {
+        summary: "Get challenge analytics",
+        description: "Retrieve analytics data about the challenges, such as the number of opened, ongoing, and completed challenges.",
+        tags: ["Challenges"],
+        responses: {
+          200: {
+            description: "Challenge analytics retrieved successfully",
+            content: {
+              "application/json": {
+                schema: {
+                  type: "object",
+                  properties: {
+                    opened: { type: "number", description: "Number of opened challenges" },
+                    ongoing: { type: "number", description: "Number of ongoing challenges" },
+                    completed: { type: "number", description: "Number of completed challenges" },
+                  },
+                },
+              },
+            },
+          },
+          500: {
+            description: "Internal server error",
+          },
+        },
+      },
+    },
     "/api/challenges/create": {
       post: {
         summary: "Create a challenge",
@@ -115,57 +193,7 @@ const swaggerDocument = {
         },
       },
     },
-    "/api/challenges/{id}": {
-      get: {
-        summary: "Get a challenge by ID",
-        description: "Retrieve a specific challenge by its unique ID.",
-        tags: ["Challenges"],
-        parameters: [
-          {
-            name: "id",
-            in: "path",
-            required: true,
-            description: "The ID of the challenge to retrieve",
-            schema: {
-              type: "string",
-            },
-          },
-        ],
-        responses: {
-          200: {
-            description: "Challenge retrieved successfully",
-            content: {
-              "application/json": {
-                schema: {
-                  type: "object",
-                  properties: {
-                    id: { type: "string", description: "Challenge ID" },
-                    title: { type: "string", description: "Title of the challenge" },
-                    deadline: { type: "string", format: "date", description: "Deadline of the challenge" },
-                    duration: { type: "string", description: "Duration of the challenge" },
-                    moneyPrize: { type: "string", description: "Prize money" },
-                    contactEmail: { type: "string", format: "email", description: "Contact email" },
-                    description: { type: "string", description: "Detailed description" },
-                    brief: { type: "string", description: "Brief description" },
-                    tasks: { type: "string", description: "Tasks description" },
-                    seniority: { type: "array", items: { type: "string", enum: ["Junior", "Mid", "Senior"] }, description: "Seniority of the challenge" },
-                    skillsNeeded: { type: "array", items: { type: "string" }, description: "Skills needed for the challenge" },
-                    createdAt: { type: "string", format: "date-time", description: "Creation date of the challenge" },
-                    updatedAt: { type: "string", format: "date-time", description: "Last updated date of the challenge" },
-                  },
-                },
-              },
-            },
-          },
-          404: {
-            description: "Challenge not found",
-          },
-          500: {
-            description: "Internal server error",
-          },
-        },
-      },
-    },
+    
     "/api/challenges/update/{id}": {
       put: {
         summary: "Update a challenge",
@@ -222,6 +250,86 @@ const swaggerDocument = {
         },
       },
     },
+   
+    "/api/challenges/{id}/status": {
+      put: {
+        summary: "Update challenge status",
+        description: "Update the status of a challenge by its unique ID.",
+        tags: ["Challenges"],
+        parameters: [
+          {
+            name: "id",
+            in: "path",
+            required: true,
+            description: "The ID of the challenge to update",
+            schema: {
+              type: "string",
+            },
+          },
+        ],
+        requestBody: {
+          required: true,
+          content: {
+            "application/json": {
+              schema: {
+                type: "object",
+                properties: {
+                  status: { 
+                    type: "string", 
+                    enum: ["OPENED", "ONGOING", "COMPLETED"], 
+                    description: "The new status of the challenge" 
+                  },
+                },
+                required: ["status"],
+              },
+            },
+          },
+        },
+        responses: {
+          200: {
+            description: "Challenge status updated successfully",
+            content: {
+              "application/json": {
+                schema: {
+                  type: "object",
+                  properties: {
+                    message: { type: "string", description: "Success message" },
+                    updatedChallenge: {
+                      type: "object",
+                      properties: {
+                        id: { type: "string", description: "Challenge ID" },
+                        title: { type: "string", description: "Title of the challenge" },
+                        deadline: { type: "string", format: "date", description: "Deadline of the challenge" },
+                        duration: { type: "string", description: "Duration of the challenge" },
+                        moneyPrize: { type: "string", description: "Prize money" },
+                        contactEmail: { type: "string", format: "email", description: "Contact email" },
+                        description: { type: "string", description: "Detailed description" },
+                        brief: { type: "string", description: "Brief description" },
+                        tasks: { type: "string", description: "Tasks description" },
+                        seniority: { type: "array", items: { type: "string", enum: ["Junior", "Mid", "Senior"] }, description: "Seniority of the challenge" },
+                        skillsNeeded: { type: "array", items: { type: "string" }, description: "Skills needed for the challenge" },
+                        createdAt: { type: "string", format: "date-time", description: "Creation date of the challenge" },
+                        updatedAt: { type: "string", format: "date-time", description: "Last updated date of the challenge" },
+                        status: { type: "string", enum: ["OPENED", "ONGOING", "COMPLETED"], description: "Updated status of the challenge" },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+          400: {
+            description: "Validation error",
+          },
+          404: {
+            description: "Challenge not found",
+          },
+          500: {
+            description: "Internal server error",
+          },
+        },
+      },
+  },
     "/api/challenges/delete/{id}": {
       delete: {
         summary: "Delete a challenge",
