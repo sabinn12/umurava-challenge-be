@@ -160,6 +160,8 @@ const swaggerDocument = {
                   description: { type: "string", description: "Detailed description" },
                   brief: { type: "string", description: "Brief description" },
                   tasks: { type: "string", description: "Tasks description" },
+                  seniority: { type: "array", items: { type: "string", enum: ["Junior", "Mid", "Senior"] }, description: "Seniority levels" },
+                  skillsNeeded: { type: "array", items: { type: "string" }, description: "Skills needed" },
                 },
                 required: [
                   "title",
