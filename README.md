@@ -29,7 +29,7 @@ npm run dev
 The server will start on http://localhost:5000 (or as specified in .env).
 
 🌍 Hosted API
-The backend is deployed on Render and accessible here: 🔗 Umurava Challenge API
+The backend is deployed on Render and accessible here: 🔗 https://umurava-challenge-be.onrender.com/
 
 📜 API Documentation (Swagger)
-For detailed API endpoints and request structures, visit: 🔗 Swagger Docs
+For detailed API endpoints and request structures, visit: 🔗 https://umurava-challenge-be.onrender.com/api-docs/#/ 
